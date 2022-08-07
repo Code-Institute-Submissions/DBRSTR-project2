@@ -17,22 +17,70 @@ h1 > p{
     padding-right: 30px;
 }
 
+/* styling for cards */
 .card{
     width: 5rem;
     height: 8rem;
+    font-family: 'Rubik', sans-serif;
+    color: #025669;
+    text-align: center;
 }
-
+/* styling for icon on card */
 .card > i{
     font-size: 200%;
+    border-style: solid;
+    height: 20%;
+    width: 50%;
+    border-radius: 10%;
+    padding:10% 5%;
 }
 
+/*main play area*/
 #game-area{
-    background-color: red;
+    background-color: white;
     width:85%;
-    height:70vh;
+    height:60vh;
     margin: 0 7.5%;
 }
 
 .card-select{
+    background-color: silver;
+    width:auto;
+    margin: 0 7.5%;
+    padding: 5px;
+}
+
+.opponent{
+    background-color: silver;
+    width:auto;
+    padding: 5px;
+}
+
+.opponent-choice{
+    width: 100%;
+    height: 36.5%;
+}
+
+.user-choice{
+    width: 100%;
+    height:36.5%;
+}
+
+.score-area{
+    width:85%;
+    margin: 0 7.5%;
     
 }
+
+.scores{
+    display: inline-block;
+}
+
+.rules{
+    position: relative;
+    bottom: 0;
+    text-align: right;
+    width: auto;
+    top: 0;
+}
+
