@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!--fontawesome-->
+    <script src="https://kit.fontawesome.com/b3c59f9555.js" crossorigin="anonymous"></script>
+
+    <!--vulcan handsign icon-->
+    <link rel='shortcut icon' type='image/x-icon' href='hand-spock-solid.ico' />
+
+    <title>Rock, Paper, Scissors</title>
+
+</head>
+
+<body>
+    <h1><p>Rock <i class="fa-solid fa-hand-back-fist"></i></p><p> Paper <i class="fa-solid fa-hand"></i></p><p> Scissors <i
+            class="fa-solid fa-hand-scissors"></i></p><p> Lizard <i class="fa-solid fa-hand-lizard"></i></p><p> Spock <i
+            class="fa-solid fa-hand-spock"></i></p></h1>
+
+    <div id="game-area">
+        <div class="opponent">
+            <button class="card card-opponent">
+                <i class="fa-solid fa-question"></i>
+            </button>
+        </div>
+        <div class="reveal-choice">
+            <div class="card" id="o-choice"></div>
+            <div class="card" id="u-choice"></div>
+        </div>
+        <div class="user-choice">
+            <div id="user-card"></div>
+        </div>
+        <div class="card-select">
+            <button data-type="rock" class="card card-rock">
+                <p>ROCK</p>
+                <i class="fa-regular fa-hand-back-fist"></i>
+            </button>
+            <button data-type="paper" class="card card-paper">
+                <p>PAPER</p>
+                <i class="fa-regular fa-hand"></i>
+            </button>
+            <button data-type="scissors" class="card card-scissors">
+                <p>SCISSORS</p>
+                <i class="fa-regular fa-hand-scissors"></i>
+            </button>
+            <button data-type="lizard" class="card card--lizard">
+                <p>LIZARD</p>
+                <i class="fa-regular fa-hand-lizard"></i>
+            </button>
+            <button data-type="spock" class="card card-spock">
+                <p>SPOCK</p>
+                <i class="fa-regular fa-hand-spock"></i>
+            </button>
+        </div>
+    </div>
+    <div class="score-area">
+        <span class="scores"> wins: <span id="score">0</span></span>
+        <span class="scores">Lives left: <span id="lives">3</span></span>
+    </div>
+
+    <script src="assets/js/scipt.js"></script>
+</body>
+
+</html>
