@@ -4,7 +4,8 @@
 A game of chance, with a minor twist - this game uses cards to denote which hand you have chosen, then pits it against a computer opponent.
 <br>
 Visitors to the page can find a difficulty selection area and below that, some rules on what hand beats what.
-
+<br>
+The game ends when either you core 5 points, or you lose 5 lives to the computer opponent.
 <br>
 <br>
 <hr>
