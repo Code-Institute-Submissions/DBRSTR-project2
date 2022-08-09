@@ -1,12 +1,14 @@
     // define game maths
     //let easyNum = Math.floor(Math.random() * 3) + 1;
     //let medNum = Math.floor(Math.random() * 4) + 1;
-    let cardNum = Math.floor(Math.random() * 5) + 1;
+
     let rockNum = 1;
-    let paperNum = 2;
+    /* let paperNum = 2;
     let scissorsNum = 3;
     let lizardNum = 4;
-    let spockNum = 5;
+    let spockNum = 5; */
+
+
 
     //wait for DOM to load and then create diffculty selection within HTML
     document.addEventListener("DOMContentLoaded", function () {
@@ -65,7 +67,7 @@
         let getCards = document.getElementById('card-select');
 
         //html for lizard card
-        let lizard = `<button data-type="lizard" class="card">
+        let lizard = `<button data-type="lizard" class="card" id="4">
     <p>LIZARD</p>
     <i class="fa-regular fa-hand-lizard"></i>
     </button>`;
@@ -73,15 +75,15 @@
         /* html for spock card.
         NOTE: 5px <span> added for consistent styling, as all cards should be 5px apart from oneanother */
         let spock = `<span style="width: 5px"></span>
-    <button data-type="spock" class="card">
+    <button data-type="spock" class="card" id="5">
     <p>SPOCK</p>
     <i class="fa-regular fa-hand-spock"></i>
     </button>`;
 
-        //below updates the heading to show which gameMode has been selected
+        //below updates the heading to show which gameMode has been selected. UPDATE: added ID to this paragraph, to identify game type for compCardSelect()
         let title = document.getElementById('title')
         let titleDiff = `
-    <p style="text-transform: capitalize;">${gameMode} Game</p>
+    <p style="text-transform: capitalize;" id="diff-selected">${gameMode} Game</p>
     `;
 
         if (gameMode === "easy") {
@@ -114,7 +116,6 @@
                     userChoice.innerHTML = `
                     ${chosenCard}
                     `;
-
                     confirmCard()
 
                 } else if (this.getAttribute('data-type') === "paper") {
@@ -153,98 +154,195 @@
         };
     };
     /**
-     * confirmCard() uses
+     * confirmCard() displays message in opponent-div and listens for click event, before calling compCardSelect
      */
     function confirmCard() {
-        let cardChoice = document.getElementById('card-select');
-        let revert = document.getElementById('opponent-choice').innerHTML;
+        let revertNotice = document.getElementById('opponent-choice').innerHTML;
+
+        let userChoice = document.getElementById('user-choice').children;
+
+        //store chosen button as variable
+        chosenCard = userChoice.item(0);
+        //store name of chosen card, to use in HTML message below
+        let chosenCardName = userChoice.item(0).innerText;
+
         let noticeArea = document.getElementById('opponent-choice');
+
         let confirmation = `
-    <h3 style="text-transform: capitalize;">is this the card you want to play?</h3>
-    <p>Hit 'Enter' key, to confirm.</p>
+    <h3 style="text-transform: uppercase;">You've chosen: <br> ${chosenCardName}</h3>
+    <p>Please click on the pop-up card below, to confirm your choice.</p>
     <p>Unsure? Feel free to choose another card <i class="fa-regular fa-face-smile-beam"></i></p>
     `;
         noticeArea.innerHTML = confirmation;
 
-        cardChoice.addEventListener('keydown', function (event) {
-            if (event.key === "Enter") {
-                noticeArea.innerHTML = revert;
-                compCardSelect();
-            }
+        chosenCard.addEventListener('click', function () {
+            noticeArea.innerHTML = revertNotice;
+            compCardSelect()
         })
 
-
     }
 
+    /**
+     * compCardSelect() confirms which game mode is selected (using the previously set title to confirm (Easy Game, Medium Game, Hard Game)),
+     * then selects random number between 1-3, 1-4, 1-5 (depending on difficulty).
+     * It then passes this number to convertToNumber
+     */
 
     function compCardSelect() {
-        let playArea = document.getElementById('card-select').children;
-        let gameType = playArea.length
-        console.log(gameType);
+        let gameType = document.getElementById('diff-selected').innerText;
 
-        if (gameType === 3) {
-            gameType = 'easy';
-            console.log(gameType);
-        } else if (gameType === 4) {
-            gameType = 'medium';
-            console.log(gameType)
-        }
-        // span included in card-select to style cards. array length for hard is 6.
-        else if (gameType === 6) {
-            gameType = 'hard';
-            console.log(gameType)
-        };
-
-        if (gameType === 'easy') {
-            cardNum
-            while (+cardNum > +3) {
-                console.log(cardNum)
-                cardNum++;
+        let computerCardNum = Math.floor(Math.random() * 5) + 1;
+        //randomly generate number - keeps the number from staying static, in case user choose another card
+        computerCardNum;
+        if (gameType === 'Easy Game') {
+            while (3 < parseInt(computerCardNum)) {
+                computerCardNum = Math.floor(Math.random() * 3) + 1;
             }
-            if (cardNum === 1) {
-                return +1;
-            } else if (cardNum === 2) {
-                return +2;
-            } else if (cardNum === 3) {
-                return +3;
+            if (computerCardNum === 1) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 2) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 3) {
+                convertToNumber([computerCardNum, gameType])
             }
-        } else if (gameType === 'medium') {
-            cardNum
-            while (+cardNum > +4) {
-                console.log(cardNum);
-                cardNum++
+        } else if (gameType === 'Medium Game') {
+            while (4 < parseInt(computerCardNum)) {
+                computerCardNum = Math.floor(Math.random() * 4) + 1;
             }
-            if (cardNum === 1) {
-                return +1;
-            } else if (cardNum === 2) {
-                return +2;
-            } else if (cardNum === 3) {
-                return +3;
-            } else if (cardNum === 4) {
-                return +4;
+            if (computerCardNum === 1) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 2) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 3) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 4) {
+                convertToNumber([computerCardNum, gameType])
             }
-        } else if (gameType === 'hard') {
-            cardNum
-            if (cardNum === 1) {
-                return +1;
-            } else if (cardNum === 2) {
-                return +2;
-            } else if (cardNum === 3) {
-                return +3;
-            } else if (cardNum === 4) {
-                return +4;
-            } else if (cardNum === 5) {
-                return +5;
+        } else if (gameType === 'Hard Game') {
+            computerCardNum
+            if (computerCardNum === 1) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 2) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 3) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 4) {
+                convertToNumber([computerCardNum, gameType])
+            } else if (computerCardNum === 5) {
+                convertToNumber([computerCardNum, gameType])
             };
         };
+
     }
 
-        function calculateRoundWinner() {
-            let lives = document.getElementById('lives');
-            moves++;
-            lives.innerText = `${5-moves}`;
+    /**
+     * 
+     *  convertToNumber() takes the variable computerCardNum as a parameter. It converts the card in user-choice to a number,
+     * then calls calculateRoundWinner() 
+     */
+    function convertToNumber([computerCardNum, gameType]) {
+
+        let userChoice = document.getElementById('user-choice').children;
+
+        //store <p> text as a variable
+        let chosenCardName = userChoice.item(0).innerText;
+
+        let convertCardToInt;
+
+        if (chosenCardName === 'ROCK') {
+            convertCardToInt = 1;
+
+        } else if (chosenCardName === 'PAPER') {
+            convertCardToInt = 2;
+
+        } else if (chosenCardName === 'SCISSORS') {
+            convertCardToInt = 3;
+
+        } else if (chosenCardName === 'LIZARD') {
+            convertCardToInt = 4;
+
+        } else if (chosenCardName === 'SPOCK') {
+            convertCardToInt = 5;
+
+        } else {
+            alert('Calculation error. Please restart the game')
         }
 
-        function calculateGameWinner() {
+        gameInformation = [chosenCardName, convertCardToInt, computerCardNum, gameType]
 
-        }
+        calculateRoundWinner(gameInformation)
+    };
+
+
+    function calculateRoundWinner(gameInformation) {
+
+        console.log(gameInformation)
+
+        rockScoreObj = {
+            RockWin: [3, 4],
+            RockLose: [2, 5],
+        };
+        let userInt = gameInformation[1];
+        let computerInt = gameInformation[2];
+        gameType = gameInformation[3];
+
+        let gameWin;
+        let gameLose;
+
+        if (gameType === 'Easy Game') {
+            if (userInt === 1) {
+                if (computerInt === 3) {
+                    alert('You Win!');
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    alert("it's a Tie!");
+                    cardSelect()
+                } else {
+                    alert('Darn. This round goes to the machines..');
+                    scoreTally()
+                }
+            } else if (userInt === 2) {
+                if (computerInt === 1) {
+                    alert('You Win!');
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    alert("it's a Tie!");
+                    cardSelect()
+                } else {
+                    alert('Darn. This round goes to the machines..');
+                    scoreTally()
+                }
+            } else if (userInt === 3) {
+                if (computerInt === 2) {
+                    alert('You Win!');
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    alert("it's a Tie!");
+                    cardSelect()
+                } else {
+                    alert('Darn. This round goes to the machines..')
+                    scoreTally()
+                }
+            }
+
+        } else if (gameType === 'Medium'){}
+
+
+
+    };
+
+   function scoreTally() {
+        console.log('TALLY')
+    };
+
+
+    //call below function to start roun again
+    //cardSelect()
+    //get remaining lives - check if it gets to zero - call calculateGameWinner()
+
+    /* let lives = document.getElementById('lives');
+     lives++;
+     lives.innerText = `${5-lives}`; */
+
+
+    function calculateGameWinner() {} 
