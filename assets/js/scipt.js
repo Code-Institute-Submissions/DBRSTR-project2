@@ -1,15 +1,3 @@
-    // define game maths
-    //let easyNum = Math.floor(Math.random() * 3) + 1;
-    //let medNum = Math.floor(Math.random() * 4) + 1;
-
-    let rockNum = 1;
-    /* let paperNum = 2;
-    let scissorsNum = 3;
-    let lizardNum = 4;
-    let spockNum = 5; */
-
-
-
     //wait for DOM to load and then create diffculty selection within HTML
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -268,70 +256,277 @@
             alert('Calculation error. Please restart the game')
         }
 
-        gameInformation = [chosenCardName, convertCardToInt, computerCardNum, gameType]
 
-        calculateRoundWinner(gameInformation)
+
+        /* 
+        create notices object, to use in round winner calculations. I plan to split all notifications out into their own function eventually,
+        though due to time constraints, I've decided to leave them here for now. Forgive the mess!
+        */
+
+        let notices = {
+
+            winNotice: `
+         <h3 style="text-transform: uppercase;">You Win!</h3>
+         <p>Take that, evil robot overlords!</p>
+         <p><i class="fa-regular fa-face-laugh-squint"></i></i></p>
+        `,
+
+            tieNotice: `
+        <h3 style="text-transform: uppercase;">it's a tie!</h3>
+        <p>No, not a Tie-Fighter... though it still beats a loss!</p>
+        <p><i class="fa-regular fa-face-grin-beam-sweat"></i></p>
+         `,
+
+            loseNotice: `
+        <h3 style="text-transform: uppercase;">you lose :(</h3>
+        <p>Darn. This round goes to our robotic overlords at Skynet</p>
+        <p><i class="fa-solid fa-robot"></i></p>
+         `,
+        };
+
+        gameInformation = [chosenCardName, convertCardToInt, computerCardNum, gameType, notices]
+
+        if (gameInformation[3] === 'Easy Game') {
+            calculateEasyRoundWinner(gameInformation)
+        } else if (gameInformation[3] === 'Medium Game') {
+            calculateMediumRoundWinner(gameInformation)
+        } else if (gameInformation[3] === 'Hard Game') {
+            calculateHardRoundWinner(gameInformation)
+        }
+
+
     };
 
+    /**
+     * calculateMediumRoundWinner() uses the array gameInformation[], to grab user choice, user choice converted to integer, computer integer, game difficulty and notices,
+     * to compare and confirm the round outcome. Win or Lose then calls the function scoreTally, whilst a Tie calls cardSelect() to start over, without changing scores.
+     */
+    function calculateEasyRoundWinner(gameInformation) {
 
-    function calculateRoundWinner(gameInformation) {
+        //needed in tally
+        let revertNotice = document.getElementById('opponent-choice').innerHTML;
 
-        console.log(gameInformation)
+        let noticeArea = document.getElementById('opponent-choice');
 
-        rockScoreObj = {
-            RockWin: [3, 4],
-            RockLose: [2, 5],
-        };
+        //needed in tally/
+        noticeArea.innerHTML = revertNotice;
+
         let userInt = gameInformation[1];
         let computerInt = gameInformation[2];
         gameType = gameInformation[3];
 
-        let gameWin;
-        let gameLose;
-
         if (gameType === 'Easy Game') {
             if (userInt === 1) {
                 if (computerInt === 3) {
-                    alert('You Win!');
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
                     scoreTally()
                 } else if (computerInt === userInt) {
-                    alert("it's a Tie!");
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
-                    alert('Darn. This round goes to the machines..');
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
                     scoreTally()
                 }
             } else if (userInt === 2) {
                 if (computerInt === 1) {
-                    alert('You Win!');
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
                     scoreTally()
                 } else if (computerInt === userInt) {
-                    alert("it's a Tie!");
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
-                    alert('Darn. This round goes to the machines..');
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
                     scoreTally()
                 }
             } else if (userInt === 3) {
                 if (computerInt === 2) {
-                    alert('You Win!');
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
                     scoreTally()
                 } else if (computerInt === userInt) {
-                    alert("it's a Tie!");
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
-                    alert('Darn. This round goes to the machines..')
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
                     scoreTally()
                 }
             }
+        }
+    }
 
-        } else if (gameType === 'Medium'){}
+    /**
+     * calculateMediumRoundWinner() uses the array gameInformation[], to grab user choice, user choice converted to integer, computer integer, game difficulty and notices,
+     * to compare and confirm the round outcome. Win or Lose then calls the function scoreTally, whilst a Tie calls cardSelect() to start over, without changing scores.
+     */
+    function calculateMediumRoundWinner(gameInformation) {
 
+        //needed in tally
+        let revertNotice = document.getElementById('opponent-choice').innerHTML;
 
+        let noticeArea = document.getElementById('opponent-choice');
+
+        //needed in tally/
+        noticeArea.innerHTML = revertNotice;
+
+        let userInt = gameInformation[1];
+        let computerInt = gameInformation[2];
+        gameType = gameInformation[3];
+
+        if (gameType === 'Medium Game') {
+            if (userInt === 1) {
+                if (computerInt === 4) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+            } else if (userInt === 2) {
+                if (computerInt === 1) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+            } else if (userInt === 3) {
+                if (computerInt === 2) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+            } else if (userInt === 4) {
+                if (computerInt === 3) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+            }
+        }
 
     };
 
-   function scoreTally() {
+
+    /**
+     * calculateHardRoundWinner() uses the array gameInformation[], to grab user choice, user choice converted to integer, computer integer, game difficulty and notices.
+     * As hard mode has multiple ways of winning/losing, it also uses an array of two win scenarios to compare and confirm the round outcome.
+     * Win or Lose then calls the function scoreTally, whilst a Tie calls cardSelect() to start over, without changing scores.
+     */
+    function calculateHardRoundWinner(gameInformation) {
+        //needed in tally
+        let revertNotice = document.getElementById('opponent-choice').innerHTML;
+        let noticeArea = document.getElementById('opponent-choice');
+
+        //needed in tally/
+        noticeArea.innerHTML = revertNotice;
+
+        let userInt = gameInformation[1];
+        let computerInt = gameInformation[2];
+        gameType = gameInformation[3];
+
+        rockArray = [3, 4];
+        paperArray = [1, 5];
+        scissorsArray = [2, 4];
+        lizardArray = [5, 1];
+        spockArray = [3, 1];
+
+        if (gameType === 'Hard Game') {
+            if (userInt === 1) {
+                if (computerInt === rockArray[0]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === [1]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+
+            } else if (userInt === 2) {
+                if (computerInt === paperArray[0]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === paperArray[1]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+
+            } else if (userInt === 3) {
+                if (computerInt === scissorsArray[0]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt == scissorsArray[1]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+
+            } else if (userInt === 4) {
+                if (computerInt === lizardArray[0]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === lizardArray[1]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+
+            } else if (userInt === 5) {
+                if (computerInt === spockArray[0]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === spockArray[1]) {
+                    noticeArea.innerHTML = gameInformation[4].winNotice;
+                    scoreTally()
+                } else if (computerInt === userInt) {
+                    noticeArea.innerHTML = gameInformation[4].tieNotice;
+                    cardSelect()
+                } else {
+                    noticeArea.innerHTML = gameInformation[4].loseNotice;
+                    scoreTally()
+                }
+
+            }
+
+        };
+    };
+
+    function scoreTally() {
         console.log('TALLY')
     };
 
@@ -345,4 +540,16 @@
      lives.innerText = `${5-lives}`; */
 
 
-    function calculateGameWinner() {} 
+    function calculateGameWinner() {}
+
+
+    /*
+    the below notices didn't make sense to go into the calculate****RoundWinner,  where I had created the notices object originally,
+    as it would create too much mess and repetition within the functions.
+    Due to time constraints, I've decided to stick them at the bottom of the js file, though I plan to create these into their own bespoke functions,
+    to handle all notices/messages,
+    */
+
+    let revertNotice = document.getElementById('opponent-choice').innerHTML;
+
+    let noticeArea = document.getElementById('opponent-choice');
