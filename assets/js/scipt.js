@@ -1,4 +1,8 @@
-    //wait for DOM to load and then create diffculty selection within HTML
+  
+  let winner;
+   let loser;
+   
+   //wait for DOM to load and then create diffculty selection within HTML
     document.addEventListener("DOMContentLoaded", function () {
 
         //store original html as variable, to revert changes after difficulty selection
@@ -319,35 +323,35 @@
             if (userInt === 1) {
                 if (computerInt === 3) {
                     noticeArea.innerHTML = gameInformation[4].winNotice;
-                    scoreTally()
+                    scoreTally(winner)
                 } else if (computerInt === userInt) {
                     noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    scoreTally(loser)
                 }
             } else if (userInt === 2) {
                 if (computerInt === 1) {
                     noticeArea.innerHTML = gameInformation[4].winNotice;
-                    scoreTally()
+                    scoreTally(winner)
                 } else if (computerInt === userInt) {
                     noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    scoreTally(loser)
                 }
             } else if (userInt === 3) {
                 if (computerInt === 2) {
                     noticeArea.innerHTML = gameInformation[4].winNotice;
-                    scoreTally()
+                    scoreTally(winner)
                 } else if (computerInt === userInt) {
                     noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    scoreTally(loser)
                 }
             }
         }
@@ -381,7 +385,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
             } else if (userInt === 2) {
                 if (computerInt === 1) {
@@ -392,7 +396,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
             } else if (userInt === 3) {
                 if (computerInt === 2) {
@@ -403,18 +407,18 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
             } else if (userInt === 4) {
                 if (computerInt === 3) {
                     noticeArea.innerHTML = gameInformation[4].winNotice;
-                    scoreTally()
+                    scoreTally(winer)
                 } else if (computerInt === userInt) {
                     noticeArea.innerHTML = gameInformation[4].tieNotice;
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
             }
         }
@@ -458,7 +462,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
 
             } else if (userInt === 2) {
@@ -473,7 +477,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
 
             } else if (userInt === 3) {
@@ -488,7 +492,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
 
             } else if (userInt === 4) {
@@ -503,7 +507,7 @@
                     cardSelect()
                 } else {
                     noticeArea.innerHTML = gameInformation[4].loseNotice;
-                    scoreTally()
+                    loseLife()
                 }
 
             } else if (userInt === 5) {
@@ -526,29 +530,35 @@
         };
     };
 
-    function scoreTally() {
-        console.log('TALLY')
+    function scoreTally(winner, loser) {
+
+
+        winner = parseInt(document.getElementById('score').innerText);
+        document.getElementById('score').innerText = ++winner;
+
+        loser = parseInt(document.getElementById('lives').innerText);
+        document.getElementById('lives').innerText = --loser;
+
+        let scoreCheck = [winner, loser]
+
+        if (parseInt(winner) === 10) {
+            calculateGameWinner(scoreCheck)
+
+        } else if (parseInt(loser) === 0) {
+            calculateGameWinner(scoreCheck)
+        };
+
     };
 
+    function calculateGameWinner(scoreCheck) {
+        console.log(scoreCheck);
+    }
 
     //call below function to start roun again
     //cardSelect()
     //get remaining lives - check if it gets to zero - call calculateGameWinner()
 
-    /* let lives = document.getElementById('lives');
-     lives++;
-     lives.innerText = `${5-lives}`; */
 
-
-    function calculateGameWinner() {}
-
-
-    /*
-    the below notices didn't make sense to go into the calculate****RoundWinner,  where I had created the notices object originally,
-    as it would create too much mess and repetition within the functions.
-    Due to time constraints, I've decided to stick them at the bottom of the js file, though I plan to create these into their own bespoke functions,
-    to handle all notices/messages,
-    */
 
     let revertNotice = document.getElementById('opponent-choice').innerHTML;
 
